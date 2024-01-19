@@ -1,6 +1,6 @@
 {
-  "name": "it-company-podcast-rss-feed",
-  "description": "IT企業のポッドキャストの更新をまとめたRSSフィードを配信",
+  "name": "engineer-designer-podcast-rss",
+  "description": "エンジニアやデザイナーがやっているポッドキャストの更新をまとめたRSSフィードを配信",
   "version": "1.0.0",
   "main": "",
   "scripts": {
