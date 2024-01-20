@@ -211,37 +211,18 @@ export class FeedCrawler {
     return allFeedItems;
   }
 
-  async fetchFeedItemOgsResultMap(feedItems: CustomRssParserItem[], concurrency: number): Promise<OgsResultMap> {
+  fetchFeedItemOgsResultMap(feedItems: CustomRssParserItem[]): OgsResultMap {
     const feedItemOgsResultMap: OgsResultMap = new Map();
-    const feedItemsLength = feedItems.length;
-    let fetchProcessCounter = 1;
 
-    await PromisePool.for(feedItems)
-      .withConcurrency(concurrency)
-      .process(async (feedItem) => {
-        const [error, ogsResult] = await to(
-          exponentialBackoff(() => {
-            // ブログなのでここではOG情報を取得しているけど、ポッドキャストはfeedのitemだけからここに該当する情報を作れるはず
-            return FeedCrawler.generateOgsResultFromPodcastItem(feedItem);
-          }),
-        );
-        if (error) {
-          logger.error(
-            '[fetch-feed-item-og] error',
-            `${fetchProcessCounter++}/${feedItemsLength}`,
-            feedItem.title,
-            feedItem.link,
-          );
-          logger.trace(error);
-          return;
-        }
-
-        feedItemOgsResultMap.set(feedItem.link, ogsResult);
-        logger.info('[fetch-feed-item-og] fetched', `${fetchProcessCounter++}/${feedItemsLength}`, feedItem.title);
-      });
+    feedItems.forEach((feedItem) => {
+      if (feedItem.enclosure?.url === undefined) {
+        return;
+      }
+      const ogsResult = FeedCrawler.generateOgsResultFromPodcastItem(feedItem);
+      feedItemOgsResultMap.set(feedItem.enclosure.url, ogsResult);
+    });
 
     logger.info('[fetch-feed-item-og] finished');
-
     return feedItemOgsResultMap;
   }
 
@@ -294,10 +275,10 @@ export class FeedCrawler {
     return ogsResult;
   }
 
-  private static async generateOgsResultFromPodcastItem(feedItem: CustomRssParserItem): Promise<OgsResult> {
+  private static generateOgsResultFromPodcastItem(feedItem: CustomRssParserItem): OgsResult {
     const ogDescription = feedItem.contentSnippet || feedItem.summary || '';
-    const ogUrl = feedItem.link || '';
     const ogAudio = feedItem.enclosure?.url;
+    const ogUrl = feedItem.link || ogAudio || '';
     const ogsResult: OgsResult = {
       ogTitle: feedItem.title || '',
       ogType: 'article',

@@ -26,15 +26,13 @@ const feedStorer = new FeedStorer();
 
   // フィード関連データ取得
   const [errorFetchFeedData, results] = await to(
-    Promise.all([
-      feedCrawler.fetchFeedItemOgsResultMap(allFeedItems, FEED_OG_FETCH_CONCURRENCY),
-      feedCrawler.fetchFeedBlogOgsResultMap(feeds, FEED_OG_FETCH_CONCURRENCY),
-    ]),
+    Promise.all([feedCrawler.fetchFeedBlogOgsResultMap(feeds, FEED_OG_FETCH_CONCURRENCY)]),
   );
   if (errorFetchFeedData) {
     throw new Error('フィード関連データの取得に失敗しました');
   }
-  const [allFeedItemOgsResultMap, feedBlogOgsResultMap] = results;
+  const allFeedItemOgsResultMap = feedCrawler.fetchFeedItemOgsResultMap(allFeedItems);
+  const [feedBlogOgsResultMap] = results;
 
   // まとめフィード作成
   const ogsResultMap = new Map([...allFeedItemOgsResultMap, ...feedBlogOgsResultMap]);

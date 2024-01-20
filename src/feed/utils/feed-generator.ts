@@ -32,12 +32,16 @@ export class FeedGenerator {
     } as FeedOptions);
 
     for (const feedItem of feedItems) {
+      // ポッドキャストはブログと違って音声がないと意味がないので、音声がないものは入れない
+      if (feedItem.enclosure?.url === undefined) {
+        continue;
+      }
       logger.info('[create-feed-item]', feedItem.isoDate, feedItem.title);
 
       const feedItemId = feedItem.guid || feedItem.link;
       const feedItemContent = (feedItem.summary || feedItem.contentSnippet || '').replace(/(\n|\t+|\s+)/g, ' ');
 
-      const ogsResult = feedItemOgsResultMap.get(feedItem.link);
+      const ogsResult = feedItemOgsResultMap.get(feedItem.enclosure.url);
       const ogImage = ogsResult?.ogImage;
 
       // 日付がないものは入れない
