@@ -25,7 +25,7 @@ blogFeeds = blogFeeds.sort((a, b) => {
 });
 
 const indexTargetUrls = blogFeeds.slice(0, INDEXING_LIMIT).map((blogFeed) => {
-  return `${constants.siteUrlStem}/blogs/${blogFeed.linkMd5Hash}/`;
+  return `${constants.siteUrlStem}/shows/${blogFeed.linkMd5Hash}/`;
 });
 
 const jwtClient = new google.auth.JWT({

@@ -8,7 +8,7 @@
     </a>
     <div class='ui-feed-item__content'>
         <a class='ui-feed-item__title' href='{{ feedItem.url }}'>{{ feedItem._custom.originalTitle }}</a>
-        <a class='ui-feed-item__blog-title ui-feed-item__blog-title--link' href='{{ page.url | relativeUrl }}blogs/{{ feedItem._custom.blogLinkMd5Hash }}'>{{ feedItem._custom.blogTitle }}</a>
+        <a class='ui-feed-item__blog-title ui-feed-item__blog-title--link' href='{{ page.url | relativeUrl }}shows/{{ feedItem._custom.blogLinkMd5Hash }}'>{{ feedItem._custom.blogTitle }}</a>
         {% if feedItem.content_html %}
             <div class='ui-feed-item__summary'>{{ feedItem.content_html | truncate(500, true, "...") }}</div>
         {% endif %}
