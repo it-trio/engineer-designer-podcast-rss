@@ -17,8 +17,6 @@
     --orange-background-dark: var(--material-color-orange-500);
     --orange-background-dark-active: var(--material-color-orange-600);
 
-    --hatena-color: #01a5df;
-
     --base-font:
         -apple-system,
         BlinkMacSystemFont,
@@ -234,21 +232,6 @@ img {
 }
 .ui-feed-item .ui-feed-item__title:visited {
     color: var(--base-color-lighter);
-}
-.ui-feed-item .ui-feed-item__hatena-count {
-    margin: 0.1em 0;
-    font-size: 0.7em;
-}
-.ui-feed-item .ui-feed-item__hatena-count img {
-    display: inline;
-    width: 1.25em;
-    height: 1.25em;
-    vertical-align: middle;
-}
-.ui-feed-item .ui-feed-item__hatena-count span {
-    color: var(--hatena-color);
-    font-weight: bold;
-    vertical-align: middle;
 }
 .ui-feed-item .ui-feed-item__blog-title {
     margin: 0.3em 0;

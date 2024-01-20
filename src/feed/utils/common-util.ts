@@ -1,11 +1,6 @@
 import * as v8 from 'v8';
 import * as crypto from 'crypto';
-import axios from 'axios';
 import { to } from 'await-to-js';
-
-type HatenaCountMap = {
-  [key: string]: number;
-};
 
 export const objectDeepCopy = <T>(data: T): T => {
   // TODO: Node.js 17 以上にしたら structuredClone 使う
@@ -76,12 +71,6 @@ export const exponentialBackoff = async <A>(retrier: () => Promise<A>, retries =
   }
 
   throw new Error('Something went wrong.');
-};
-
-export const fetchHatenaCountMap = async (urls: string[]): Promise<HatenaCountMap> => {
-  const params = urls.map((url) => `url=${url}`).join('&');
-  const response = await axios.get<HatenaCountMap>(`https://bookmark.hatenaapis.com/count/entries?${params}`);
-  return response.data;
 };
 
 export const sleep = (waitTime: number) => {

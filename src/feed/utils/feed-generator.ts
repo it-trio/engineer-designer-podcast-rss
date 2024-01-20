@@ -1,5 +1,5 @@
 import { Feed, FeedOptions } from 'feed';
-import { CustomRssParserItem, FeedItemHatenaCountMap, OgsResultMap } from './feed-crawler';
+import { CustomRssParserItem, OgsResultMap } from './feed-crawler';
 import { escapeTextForXml, textToMd5Hash, textTruncate } from './common-util';
 import { logger } from './logger';
 import * as constants from '../../common/constants';
@@ -14,7 +14,6 @@ export class FeedGenerator {
   createFeed(
     feedItems: CustomRssParserItem[],
     feedItemOgsResultMap: OgsResultMap,
-    allFeedItemHatenaCountMap: FeedItemHatenaCountMap,
     maxFeedDescriptionLength: number,
     maxFeedContentLength: number,
   ): Feed {
@@ -81,7 +80,6 @@ export class FeedGenerator {
           {
             name: '_custom',
             objects: {
-              hatenaCount: allFeedItemHatenaCountMap.get(feedItem.link) || 0,
               originalTitle: feedItem.title,
               blogTitle: feedItem.blogTitle,
               blogLink: feedItem.blogLink,

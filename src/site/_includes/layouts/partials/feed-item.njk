@@ -8,12 +8,6 @@
     </a>
     <div class='ui-feed-item__content'>
         <a class='ui-feed-item__title' href='{{ feedItem.url }}'>{{ feedItem._custom.originalTitle }}</a>
-        {% if feedItem._custom.hatenaCount > 0 %}
-            <div class='ui-feed-item__hatena-count' title='はてなブックマーク数'>
-                <img src='{{ page.url | relativeUrl }}images/hatenabookmark-icon.png' alt='はてなブックマークアイコン' loading="lazy" width='96' height='96'>
-                <span>{{ feedItem._custom.hatenaCount }}</span>
-            </div>
-        {% endif %}
         <a class='ui-feed-item__blog-title ui-feed-item__blog-title--link' href='{{ page.url | relativeUrl }}blogs/{{ feedItem._custom.blogLinkMd5Hash }}'>{{ feedItem._custom.blogTitle }}</a>
         {% if feedItem.content_html %}
             <div class='ui-feed-item__summary'>{{ feedItem.content_html | truncate(500, true, "...") }}</div>

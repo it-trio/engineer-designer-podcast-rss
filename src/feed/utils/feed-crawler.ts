@@ -4,7 +4,6 @@ import { FeedInfo } from '../../resources/feed-info-list';
 import dayjs from 'dayjs';
 import { URL } from 'url';
 import {
-  fetchHatenaCountMap,
   isValidHttpUrl,
   objectDeepCopy,
   removeInvalidUnicode,
@@ -34,7 +33,6 @@ export type OgsResult = {
   };
 };
 export type OgsResultMap = Map<string, OgsResult>;
-export type FeedItemHatenaCountMap = Map<string, number>;
 export type CustomRssParserItem = RssParser.Item & {
   link: string;
   audioUrl: string;
@@ -354,41 +352,6 @@ export class FeedCrawler {
     }
 
     return ogsResponse.result;
-  }
-
-  async fetchHatenaCountMap(feedItems: CustomRssParserItem[]): Promise<FeedItemHatenaCountMap> {
-    const feedItemHatenaCountMap: Map<string, number> = new Map();
-    const feedItemUrlsChunks: string[][] = [];
-    let feedItemCounter = 0;
-
-    for (const feedItem of feedItems) {
-      // API的に50個まで
-      const chunkIndex = Math.floor(feedItemCounter / 50);
-
-      if (!feedItemUrlsChunks[chunkIndex]) {
-        feedItemUrlsChunks[chunkIndex] = [];
-      }
-
-      feedItemUrlsChunks[chunkIndex].push(feedItem.link);
-
-      feedItemCounter++;
-    }
-
-    for (const feedItemUrls of feedItemUrlsChunks) {
-      const [error, hatenaCountMap] = await to(fetchHatenaCountMap(feedItemUrls));
-
-      if (error) {
-        Promise.reject(new Error('[hatena-count] Fail to get hatena bookmark count', { cause: error }));
-      }
-
-      for (const feedItemUrl in hatenaCountMap) {
-        feedItemHatenaCountMap.set(feedItemUrl, hatenaCountMap[feedItemUrl]);
-      }
-    }
-
-    logger.info('[fetch-feed-item-hatena-count] fetched', feedItemHatenaCountMap);
-
-    return feedItemHatenaCountMap;
   }
 
   async fetchAndCacheOgImages(

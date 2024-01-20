@@ -28,21 +28,19 @@ const feedStorer = new FeedStorer();
   const [errorFetchFeedData, results] = await to(
     Promise.all([
       feedCrawler.fetchFeedItemOgsResultMap(allFeedItems, FEED_OG_FETCH_CONCURRENCY),
-      feedCrawler.fetchHatenaCountMap(allFeedItems),
       feedCrawler.fetchFeedBlogOgsResultMap(feeds, FEED_OG_FETCH_CONCURRENCY),
     ]),
   );
   if (errorFetchFeedData) {
     throw new Error('フィード関連データの取得に失敗しました');
   }
-  const [allFeedItemOgsResultMap, allFeedItemHatenaCountMap, feedBlogOgsResultMap] = results;
+  const [allFeedItemOgsResultMap, feedBlogOgsResultMap] = results;
 
   // まとめフィード作成
   const ogsResultMap = new Map([...allFeedItemOgsResultMap, ...feedBlogOgsResultMap]);
   const aggregatedFeed = feedGenerator.createFeed(
     allFeedItems,
     ogsResultMap,
-    allFeedItemHatenaCountMap,
     MAX_FEED_DESCRIPTION_LENGTH,
     MAX_FEED_CONTENT_LENGTH,
   );
@@ -63,7 +61,7 @@ const feedStorer = new FeedStorer();
   const [errorStoreFeed] = await to(
     Promise.all([
       feedStorer.storeFeeds(outputFeedSet, STORE_FEEDS_DIR_PATH),
-      feedStorer.storeBlogFeeds(feeds, ogsResultMap, allFeedItemHatenaCountMap, STORE_BLOG_FEEDS_DIR_PATH),
+      feedStorer.storeBlogFeeds(feeds, ogsResultMap, STORE_BLOG_FEEDS_DIR_PATH),
     ]),
   );
   if (errorStoreFeed) {

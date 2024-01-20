@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import { OgsResultMap, CustomRssParserFeed, FeedItemHatenaCountMap } from './feed-crawler';
+import { OgsResultMap, CustomRssParserFeed } from './feed-crawler';
 import { textToMd5Hash, textTruncate } from './common-util';
 import { OutputFeedSet } from './feed-generator';
 import { logger } from './logger';
@@ -17,7 +17,6 @@ export type BlogFeed = {
     summary: string;
     content_html: string;
     isoDate: string;
-    hatenaCount: number;
     ogImageUrl: string;
   }[];
 };
@@ -32,12 +31,7 @@ export class FeedStorer {
     logger.info('[store-feeds] finished');
   }
 
-  async storeBlogFeeds(
-    feeds: CustomRssParserFeed[],
-    ogsResultMap: OgsResultMap,
-    allFeedItemHatenaCountMap: FeedItemHatenaCountMap,
-    storeDirPath: string,
-  ): Promise<void> {
+  async storeBlogFeeds(feeds: CustomRssParserFeed[], ogsResultMap: OgsResultMap, storeDirPath: string): Promise<void> {
     await fs.rm(storeDirPath, { recursive: true, force: true });
     await fs.mkdir(storeDirPath, { recursive: true });
 
@@ -61,7 +55,6 @@ export class FeedStorer {
           content_html: textTruncate(feedItemContent, 1000),
           link: feedItem.link,
           isoDate: feedItem.isoDate,
-          hatenaCount: allFeedItemHatenaCountMap.get(feedItem.link) || 0,
           ogImageUrl: ogsResultMap.get(feedItem.link)?.ogImage?.url || '',
         });
       }

@@ -36,12 +36,6 @@ permalink: "blogs/{{ blogFeed.linkMd5Hash }}/"
                     </a>
                     <div class='ui-feed-item__content'>
                         <a class='ui-feed-item__title' href='{{ feedItem.link }}'>{{ feedItem.title }}</a>
-                        {% if feedItem.hatenaCount > 0 %}
-                            <div class='ui-feed-item__hatena-count' title='はてなブックマーク数'>
-                                <img src='{{ page.url | relativeUrl }}images/hatenabookmark-icon.png' alt='はてなブックマークアイコン' loading="lazy" width='96' height='96'>
-                                <span>{{ feedItem.hatenaCount }}</span>
-                            </div>
-                        {% endif %}
                         <div class='ui-feed-item__blog-title'>{{ blogFeed.title }}</div>
                         {% if feedItem.content_html %}
                             <div class='ui-feed-item__summary'>{{ feedItem.content_html | truncate(1000, true, "...") }}</div>
