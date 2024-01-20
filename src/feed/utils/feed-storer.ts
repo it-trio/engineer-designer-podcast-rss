@@ -55,7 +55,7 @@ export class FeedStorer {
           content_html: textTruncate(feedItemContent, 1000),
           link: feedItem.link,
           isoDate: feedItem.isoDate,
-          ogImageUrl: ogsResultMap.get(feedItem.link)?.ogImage?.url || '',
+          ogImageUrl: ogsResultMap.get(feedItem.audioUrl)?.ogImage?.url || '',
         });
       }
 
