@@ -22,6 +22,7 @@ export type OgsResult = {
   ogTitle: string;
   ogType: string;
   ogUrl: string;
+  ogAudio?: string;
   ogDescription: string;
   favicon: string;
   requestUrl: string;
@@ -36,9 +37,14 @@ export type OgsResultMap = Map<string, OgsResult>;
 export type FeedItemHatenaCountMap = Map<string, number>;
 export type CustomRssParserItem = RssParser.Item & {
   link: string;
+  audioUrl: string;
   isoDate: string;
   blogTitle: string;
   blogLink: string;
+  itunes?: {
+    image: string;
+    duration: string;
+  };
 };
 export type CustomRssParserFeed = RssParser.Output<CustomRssParserItem> & {
   link: string;
@@ -75,7 +81,7 @@ export class FeedCrawler {
       .process(async (feedInfo) => {
         const [error, feed] = await to(
           exponentialBackoff(() => {
-            return this.rssParser.parseURL(feedInfo.url) as Promise<CustomRssParserFeed>;
+            return this.rssParser.parseURL(feedInfo.url);
           }),
         );
         if (error) {
@@ -89,7 +95,7 @@ export class FeedCrawler {
           return;
         }
 
-        const postProcessedFeed = FeedCrawler.postProcessFeed(feedInfo, feed);
+        const postProcessedFeed = FeedCrawler.postProcessFeed(feedInfo, feed as CustomRssParserFeed);
 
         // フィードのリンクの重複チェック。すでにあったらスキップ
         if (feedLinkSet.has(postProcessedFeed.link)) {
@@ -140,41 +146,13 @@ export class FeedCrawler {
    * 取得したフィードの調整
    */
   private static postProcessFeed(feedInfo: FeedInfo, feed: CustomRssParserFeed): CustomRssParserFeed {
-    const customFeed = feed as CustomRssParserFeed;
+    const customFeed = feed;
 
-    // ブログごとの調整
-    switch (feedInfo.label) {
-      case 'メルカリ':
-        // 9時間ずれているので調整
-        FeedCrawler.subtractFeedItemsDateHour(customFeed, 9);
-        customFeed.link = 'https://engineering.mercari.com/blog/';
-        break;
-      case 'KAIZEN PLATFORM':
-        // 9時間ずれているので調整
-        FeedCrawler.subtractFeedItemsDateHour(customFeed, 9);
-        break;
-      case 'Tokyo Otaku Mode':
-        customFeed.link = 'https://blog.otakumode.com/';
-        break;
-      case 'フューチャー':
-        customFeed.link = 'https://future-architect.github.io/';
-        break;
-      case 'さくら':
-        customFeed.link = 'https://knowledge.sakura.ad.jp/';
-        break;
-      case 'YOJO Technologies':
-        customFeed.title = 'YOJO Technologies Blog';
-        break;
-      case 'POL':
-        customFeed.title = 'POL テックノート';
-        break;
-      case 'mofmof':
-        customFeed.link = 'https://tech.mof-mof.co.jp';
-        break;
-      case 'CADDi':
-        customFeed.link = 'https://caddi.tech/';
-        break;
-    }
+    // 番組ごとの調整
+    // switch (feedInfo.label) {
+    //   case 'メルカリ':
+    //     break;
+    // }
 
     if (!isValidHttpUrl(customFeed.link)) {
       logger.warn('取得したフィードのURLが正しくありません。 ', feedInfo.label, customFeed.link);
@@ -202,6 +180,7 @@ export class FeedCrawler {
       // view用
       feedItem.blogTitle = customFeed.title || '';
       feedItem.blogLink = customFeed.link || '';
+      feedItem.audioUrl = feedItem.enclosure?.url || '';
     }
 
     return customFeed;
@@ -211,7 +190,6 @@ export class FeedCrawler {
     let allFeedItems: CustomRssParserItem[] = [];
     const copiedFeeds: CustomRssParserFeed[] = objectDeepCopy(feeds);
     const filterIsoDate = filterArticleDate.toISOString();
-    const currentIsoDate = new Date().toISOString();
 
     for (const feed of copiedFeeds) {
       // 公開日時でフィルタ
@@ -221,20 +199,6 @@ export class FeedCrawler {
         }
 
         return feedItem.isoDate >= filterIsoDate;
-      });
-
-      // 現在時刻より未来のものはフィルタ。UTC表記で日本時間設定しているブログがあるので。
-      feed.items = feed.items.filter((feedItem) => {
-        if (!feedItem.isoDate) {
-          return false;
-        }
-
-        if (feedItem.isoDate > currentIsoDate) {
-          logger.warn('[aggregate-feed] 記事の公開日時が未来になっています。', feedItem.title, feedItem.link);
-          return false;
-        }
-
-        return true;
       });
 
       // マージ
@@ -259,7 +223,8 @@ export class FeedCrawler {
       .process(async (feedItem) => {
         const [error, ogsResult] = await to(
           exponentialBackoff(() => {
-            return FeedCrawler.fetchOgsResult(feedItem.link);
+            // ブログなのでここではOG情報を取得しているけど、ポッドキャストはfeedのitemだけからここに該当する情報を作れるはず
+            return FeedCrawler.generateOgsResultFromPodcastItem(feedItem);
           }),
         );
         if (error) {
@@ -292,7 +257,7 @@ export class FeedCrawler {
       .process(async (feed) => {
         const [error, ogsResult] = await to(
           exponentialBackoff(() => {
-            return FeedCrawler.fetchOgsResult(feed.link);
+            return FeedCrawler.generateOgsResultFromPodcastFeed(feed);
           }),
         );
         if (error) {
@@ -308,6 +273,50 @@ export class FeedCrawler {
     logger.info('[fetch-feed-blog-og] finished');
 
     return feedOgsResultMap;
+  }
+
+  private static async generateOgsResultFromPodcastFeed(feed: CustomRssParserFeed): Promise<OgsResult> {
+    const ogDescription = feed.description || '';
+    const url = feed.link || '';
+    const ogsResult: OgsResult = {
+      ogTitle: feed.title || '',
+      ogType: 'article',
+      ogUrl: url,
+      ogDescription,
+      favicon: '',
+      requestUrl: url,
+      ogImage: {
+        url: feed.itunes?.image || '',
+        width: '',
+        height: '',
+        type: '',
+      },
+    };
+
+    return ogsResult;
+  }
+
+  private static async generateOgsResultFromPodcastItem(feedItem: CustomRssParserItem): Promise<OgsResult> {
+    const ogDescription = feedItem.contentSnippet || feedItem.summary || '';
+    const ogUrl = feedItem.link || '';
+    const ogAudio = feedItem.enclosure?.url;
+    const ogsResult: OgsResult = {
+      ogTitle: feedItem.title || '',
+      ogType: 'article',
+      ogUrl: ogUrl,
+      ogAudio,
+      ogDescription,
+      favicon: '',
+      requestUrl: ogUrl || ogAudio || '',
+      ogImage: {
+        url: feedItem.itunes?.image || '',
+        width: '',
+        height: '',
+        type: '',
+      },
+    };
+
+    return ogsResult;
   }
 
   private static async fetchOgsResult(url: string): Promise<OgsResult> {

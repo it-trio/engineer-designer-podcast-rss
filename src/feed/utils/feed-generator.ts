@@ -54,7 +54,7 @@ export class FeedGenerator {
         title: `${feedItem.title} | ${feedItem.blogTitle}`,
         description: textTruncate(feedItemContent, maxFeedDescriptionLength),
         content: textTruncate(feedItemContent, maxFeedContentLength),
-        link: feedItem.link,
+        link: feedItem.link || feedItem.audioUrl,
         category: (feedItem.categories || []).map((category) => {
           return {
             name: category,
