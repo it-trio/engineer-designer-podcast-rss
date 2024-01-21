@@ -61,6 +61,7 @@ export const FEED_INFO_LIST: FeedInfo[] = createFeedInfoList([
   ['ひまじんプログラマーの週末エンジニアリングレッスン', 'https://rss.art19.com/07ef6b45-d4fc-4d94-b211-e02a27b7e2a6'],
   ['フムフムエフエム by @takejune', 'https://anchor.fm/s/5c16f0c4/podcast/rss'],
   ['プログラミング初心者のための ナンチャッテ・ラジオ', 'http://9chat-e.mynt.work/?f=rss_radio'],
+  ['プログラム雑談', 'https://anchor.fm/s/68ce140/podcast/rss'],
   ['ものづくりnoラジオ', 'https://anchor.fm/s/bbb92038/podcast/rss'],
   ['リファクタリングとともに生きるラジオ', 'https://anchor.fm/s/ed31ece4/podcast/rss'],
   ['ゆるふわPodcast', 'https://yuru28.com/feed'],
