@@ -32,6 +32,7 @@ export const FEED_INFO_LIST: FeedInfo[] = createFeedInfoList([
   ['Good News for Cities〜都市に関する炉辺談話', 'https://anchor.fm/s/1b8386f8/podcast/rss'],
   ['Image Cast - 技術・デザイン・制作・表現の雑談', 'https://anchor.fm/s/3f0f1de4/podcast/rss'],
   ['kkeethのエンジニア雑談チャンネル', 'https://rss.art19.com/kkeethengineers'],
+  ['London Tech Talk', 'https://anchor.fm/s/d904331c/podcast/rss'],
   ['ManaのWebクリエイターカフェ', 'https://rss.art19.com/webcreatorcafe'],
   ['Misreading Chat', 'https://misreading.chat/category/episodes/feed/'],
   ['mozaic.fm', 'http://feed.mozaic.fm/'],
