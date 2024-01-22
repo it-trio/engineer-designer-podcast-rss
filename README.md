@@ -11,6 +11,7 @@
 
 - ホストのうち少なくとも1人がエンジニアかデザイナーであること
 - 番組の内容が、少しでもエンジニアリングやデザインについて触れていること
+- エピソードが5個以上あること
 - 更新が止まってなさそうなこと
 
 企業が運営しているポッドキャスト番組については[it-trio/it-company-podcast-rss-feed](https://github.com/it-trio/it-company-podcast-rss-feed)で管理しています。
