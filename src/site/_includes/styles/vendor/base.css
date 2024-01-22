@@ -217,6 +217,7 @@ svg {
 }
 
 .ui-layout-flex { display: flex; }
+.ui-layout-flex-no-shrink { flex-shrink: 0; }
 
 .ui-layout-grid { display: grid; }
 
