@@ -15,7 +15,7 @@
 企業が運営しているポッドキャスト番組については[it-trio/it-company-podcast-rss-feed](https://github.com/it-trio/it-company-podcast-rss-feed)で管理しています。
 
 ## 番組の追加方法
-[src/resources/feed-info-list.ts](https://github.com/yamadashy/tech-blog-rss-feed/blob/main/src/resources/feed-info-list.ts) で管理しており、その一覧にない場合 issue を作っていただければ対応します。  
+[src/resources/feed-info-list.ts](https://github.com/it-trio/engineer-designer-podcast-rss/blob/main/src/resources/feed-info-list.ts) で管理しており、その一覧にない場合 issue を作っていただければ対応します。  
 
 ### プルリクでの送り方
 もしプルリクを送っていただける場合は以下のように作成できます。
@@ -39,16 +39,6 @@ GitHub Actions で定期的に更新されており、サイトの生成は [Ele
 更新は多少遅延ありますが以下のタイミングで行います。
 - 平日: 6時、7時、8時、10時、12時、20時
 - 土日: 6時、12時、20時
-
-### フォークして使う場合
-以下を書き換えると独自のサイトが動きます。
-
-- `src/common/constants.js` の URL など
-- `src/resources/feed-info-list.ts` のブログ情報
-
-特定のブログに絞ったり、以下のように全く違ったフィードを作るもの良いと思います。
-
-- [MATLAB-blog-rss-feed](https://github.com/minoue-xx/MATLAB-blog-rss-feed) ... MATLAB/Simulink 関連ブログの更新をまとめたRSSフィードを配信
 
 ### 開発環境とコマンド
 環境
