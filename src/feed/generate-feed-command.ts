@@ -8,7 +8,7 @@ import { FeedValidator } from './utils/feed-validator';
 
 const FEED_FETCH_CONCURRENCY = 50;
 const FEED_OG_FETCH_CONCURRENCY = 20;
-const FILTER_ARTICLE_DATE = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+const FILTER_ARTICLE_DATE = new Date(Date.now() - 31 * 24 * 60 * 60 * 1000);
 const MAX_FEED_DESCRIPTION_LENGTH = 200;
 const MAX_FEED_CONTENT_LENGTH = 500;
 const STORE_FEEDS_DIR_PATH = path.join(__dirname, '../site/feeds');
