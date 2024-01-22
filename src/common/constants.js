@@ -5,11 +5,11 @@ module.exports = {
   // サイト設定
   siteUrl: `${siteUrl}`,
   siteUrlStem: siteUrlStem,
-  siteTitle: 'エンジニアやデザイナーがやっているポッドキャストRSS',
+  siteTitle: 'エンジニアやデザイナーがやっているポッドキャスト更新まとめ',
   siteDescription: 'エンジニアやデザイナーがやっているポッドキャストの更新をまとめたRSSフィードを配信しています',
 
   // フィード設定
-  feedTitle: 'エンジニアやデザイナーがやっているポッドキャストRSS',
+  feedTitle: 'エンジニアやデザイナーがやっているポッドキャスト更新まとめ',
   feedDescription: 'エンジニアやデザイナーがやっているポッドキャストの更新をまとめたRSSフィード',
   feedLanguage: 'ja',
   feedCopyright: 'it-trio/engineer-designer-podcast-rss',

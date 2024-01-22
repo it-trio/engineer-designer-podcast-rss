@@ -1,28 +1,20 @@
-# <img src="src/site/images/icon-transparent.png" height=26> 企業テックブログRSS
-企業のテックブログの更新をまとめたRSSフィードを配信しています。  
-記事を読んでその企業の技術・カルチャーを知れることや、質の高い技術情報を得られることを目的としています。
+# <img src="src/site/images/icon-transparent.png" height=26> エンジニアやデザイナーがやっているポッドキャスト更新まとめ
 
-https://yamadashy.github.io/tech-blog-rss-feed/
+エンジニアやデザイナーがやっているポッドキャストの更新をまとめたRSSフィードを配信しています。
+
+@yamadashyさんの作成された[yamadashy/tech-blog-rss-feed](https://yamadashy.github.io/tech-blog-rss-feed/)をフォークして作成しました。
 
 
-独自のフィードを作って公開したい場合は自由にフォークしてください。
+## 番組追加の方針
 
-## サイト追加の方針
-企業のテックブログ（技術ブログ、エンジニアブログ）であれば、基本的には追加します。  
-ただし、以下に該当するものは検討します。
+以下の条件を満たした番組を追加しています。
 
-- その企業の取り組みでないものが多く投稿される可能性があるブログ
-  - テック系メディア
-  - Qiita Organization や Zenn Publication など、組織として投稿しているかの線引が曖昧なものは、投稿内容を見て検討します
-- 記事が自社製品の紹介のみ
-- 日本語以外の言語で書かれている記事が多いブログ
+- ホストのうち少なくとも1人がエンジニアかデザイナーであること
+- 番組の内容が、少しでもエンジニアリングやデザインについて触れていること
 
-逆に、以下はテックブログと判断して追加しています。
+企業が運営しているポッドキャスト番組については[it-trio/it-company-podcast-rss-feed](https://github.com/it-trio/it-company-podcast-rss-feed)で管理しています。
 
-- [Zenn](https://zenn.dev/), [note](https://note.com/), [Medium](https://medium.com/) などの企業系テックブログ
-- 企業系ブログのテクノロジーカテゴリ
-
-## サイトの追加方法
+## 番組の追加方法
 [src/resources/feed-info-list.ts](https://github.com/yamadashy/tech-blog-rss-feed/blob/main/src/resources/feed-info-list.ts) で管理しており、その一覧にない場合 issue を作っていただければ対応します。  
 
 ### プルリクでの送り方
@@ -30,7 +22,7 @@ https://yamadashy.github.io/tech-blog-rss-feed/
 
 1. このリポジトリをフォーク
 2. ブランチ作成  
-   `git checkout -b new-blog-feed-xxx`
+   `git switch -c new-blog-feed-xxx`
 3. フィードを追加  
    `src/resources/feed-info-list.ts` の `FEED_INFO_LIST` を更新
 4. コミット  
@@ -45,8 +37,8 @@ https://yamadashy.github.io/tech-blog-rss-feed/
 GitHub Actions で定期的に更新されており、サイトの生成は [Eleventy](https://www.11ty.dev/) を使用しています。
 
 更新は多少遅延ありますが以下のタイミングで行います。
-- 平日 8時-24時の1時間おき
-- 休日 8時-24時の2時間おき
+- 平日: 6時、7時、8時、10時、12時、20時
+- 土日: 6時、12時、20時
 
 ### フォークして使う場合
 以下を書き換えると独自のサイトが動きます。
@@ -60,7 +52,7 @@ GitHub Actions で定期的に更新されており、サイトの生成は [Ele
 
 ### 開発環境とコマンド
 環境
-- Node.js >= 20
+- Node.js => .node-versionを参照
 
 パッケージのインストール
 ```bash
