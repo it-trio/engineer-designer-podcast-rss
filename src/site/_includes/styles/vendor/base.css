@@ -604,9 +604,6 @@ button {
     ------------------------------------------------------------*/
 
     .ui-text-intro { font-size: var(--ui-typography-h4); }
-    .text-span {
-        display: inline-block;
-    }
 
     /*------------------------------------------------------------
     LAYOUT
