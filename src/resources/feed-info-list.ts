@@ -49,7 +49,6 @@ export const FEED_INFO_LIST: FeedInfo[] = createFeedInfoList([
   ['Yarukinai.fm', 'http://yarukinai.fm/feed.xml'],
   ['YOWATARI RADIO', 'https://anchor.fm/s/d3754aa8/podcast/rss'],
   ['あべこべコンビのクリエイティブトーク', 'https://anchor.fm/s/e5bd4288/podcast/rss'],
-  ['Ossan.fm', 'https://ossan.fm/feed.xml'],
   ['いつものデザインのはなし', 'https://anchor.fm/s/dd40bdb0/podcast/rss'],
   ['銀の弾丸ラジオ', 'https://anchor.fm/s/13df46f8/podcast/rss'],
   ['ぐんぐんfm', 'https://anchor.fm/s/b4cfa51c/podcast/rss'],
