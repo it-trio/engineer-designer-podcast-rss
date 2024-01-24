@@ -42,7 +42,6 @@ export const FEED_INFO_LIST: FeedInfo[] = createFeedInfoList([
   ['Rebuild', 'https://feeds.rebuild.fm/rebuildfm'],
   ['resize.fm', 'https://anchor.fm/s/416f2048/podcast/rss'],
   ['Tech系フリーランスが選ぶ最近の気になるトピックス(テクフリ)', 'https://rss.art19.com/techfree'],
-  ['texta.fm', 'https://anchor.fm/s/330a9488/podcast/rss'],
   ['Today I Learned', 'https://anchor.fm/s/367f0040/podcast/rss'],
   ['web3FM', 'https://anchor.fm/s/5d5ba88/podcast/rss'],
   ['Work In Progress', 'https://anchor.fm/s/1726edc0/podcast/rss'],
