@@ -40,7 +40,6 @@ export const FEED_INFO_LIST: FeedInfo[] = createFeedInfoList([
   ['mozaic.fm', 'http://feed.mozaic.fm/'],
   ['Pod De Engineer', 'https://anchor.fm/s/12948d58/podcast/rss'],
   ['Rebuild', 'https://feeds.rebuild.fm/rebuildfm'],
-  ['rel.ax', 'https://anchor.fm/s/e644aa34/podcast/rss'],
   ['resize.fm', 'https://anchor.fm/s/416f2048/podcast/rss'],
   ['Tech系フリーランスが選ぶ最近の気になるトピックス(テクフリ)', 'https://rss.art19.com/techfree'],
   ['texta.fm', 'https://anchor.fm/s/330a9488/podcast/rss'],
