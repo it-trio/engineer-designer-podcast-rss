@@ -25,6 +25,7 @@ export const FEED_INFO_LIST: FeedInfo[] = createFeedInfoList([
   ['30代デザイナーのゆるらじお', 'https://stand.fm/rss/6342440a8fc92d08ba90ce3f'],
   ['AFTERNOON RADIO「デザインのよみかた」', 'https://anchor.fm/s/45d220f4/podcast/rss'],
   ['ajitofm', 'https://ajito.fm/index.xml'],
+  ['aozora.fm', 'https://fortegp05.github.io/aozorafm/feed.xml'],
   ['backspace.fm', 'https://rss.art19.com/backspace'],
   ['BTRAXのCEOによるサンフランシスコ・デザイントーク', 'https://anchor.fm/s/e5f60ec4/podcast/rss'],
   ['e34.fm', 'https://e34.fm/rss.xml'],
