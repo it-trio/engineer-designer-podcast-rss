@@ -218,6 +218,17 @@ svg {
 
 .ui-layout-flex { display: flex; }
 .ui-layout-flex-no-shrink { flex-shrink: 0; }
+.ui-content-by-it-trio {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+}
+.ui-content-by-it-trio span img {
+    width: 180px;
+}
 
 .ui-layout-grid { display: grid; }
 
